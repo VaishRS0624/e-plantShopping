@@ -1,6 +1,18 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
+
+
 function ProductList() {
+    const dispatch = useDispatch();
+    const [addedToCart, setAddedToCart] = useState({});
+
+    const handleAddToCart = (product) => {
+    dispatch(addItem(product));
+    setAddedToCart((prevState) => ({
+        ...prevState,
+        [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+    }));
+    };
   
     const plantsArray = [
         {
@@ -230,8 +242,9 @@ function ProductList() {
     textDecoration: 'none',
    }
     return (
+        <>
         <div>
-             <div className="navbar" style={styleObj}>
+            <div className="navbar" style={styleObj}>
             <div className="tag">
                <div className="luxury">
                <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
@@ -251,11 +264,29 @@ function ProductList() {
         </div>
 
         <div className="product-grid">
-
-
+            {plantsArray.map((category, index) => (
+            <div key={index}>
+                <h1><div>{category.category}</div></h1>
+                <div className="product-list">
+                {category.plants.map((plant, plantIndex) => (
+                    <div className="product-card" key={plantIndex}>
+                    <img className="product-image" src={plant.image} alt={plant.name} />
+                    <div className="product-title">{plant.name}</div>
+                    <div className="product-description">{plant.description}</div>
+                    <div className="product-cost">{plant.cost}</div>
+                    
+                    <button  onClick={() => handleAddToCart(plant)}>
+                    {addedToCart[product.name] ? 'Added to Cart' : 'Add to Cart'}
+                    </button>
+                    </div>
+                ))}
+                </div>
+            </div>
+            ))}
         </div>
 
     </div>
+    </>
     );
 }
 
