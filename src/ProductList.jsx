@@ -1,10 +1,17 @@
 import React, { useState,useEffect } from 'react';
-import './ProductList.css'
-
+import Header from './Header'; 
+import { useDispatch, useSelector } from 'react-redux'; 
+import { initializeProducts } from './redux/actions';
+import './ProductList.css';
 
 function ProductList() {
     const dispatch = useDispatch();
     const [addedToCart, setAddedToCart] = useState({});
+    const products = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(initializeProducts()); // Dispatching action to initialize products
+    }, []);
 
     const handleAddToCart = (product) => {
     dispatch(addItem(product));

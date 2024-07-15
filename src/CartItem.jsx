@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CreatSlice';
 import './CartItem.css';
+import Header from './Header'; // Adjust the path as needed
 
 const Cart = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
